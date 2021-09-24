@@ -6,10 +6,10 @@ python3.9 PhotoSender.py
 
 Necessary libs to use programm:
 
-smtplib
-imaplib
-time
-email
+smtplib,
+imaplib,
+time,
+email,
 os
 
 To edit any address, edit file Variable.py
