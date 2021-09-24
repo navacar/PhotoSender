@@ -124,7 +124,6 @@ def codeCorrector(code):
                 indexOfCodes[i] = j
                 break
 
-    for i in range(len(code)):
         newCode = ""
         if indexOfCodes[i] != -1:
             for j in range(indexOfCodes[i] ,len(code[i])):
@@ -139,7 +138,7 @@ def codeCorrector(code):
 
 timing = time.time()
 while True:
-    if time.time() - timing > 30:
+    if time.time() - timing > 3:
 
         mail = imaplib.IMAP4_SSL(imapServer)
         mail.login(emailAddress, PASSWORD)
