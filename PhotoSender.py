@@ -73,12 +73,23 @@ def sendTestMail(reciver, imageCode):
     msg['From'] = emailAdress
     msg['To'] = reciver
 
-    image = "Resources/" + str(imageCode) + ".jpg"
+    isExist = False
+    fileName = str(imageCode) + ".jpg"
+    image = "Resources/" + fileName
 
-    if os.path.isfile(image):
+    if os.path.isfile(image): 
+        isExist = True
+
+    if not isExist:
+        fileName = str(imageCode) + ".png"
+        image = "Resources/" + fileName
+        if os.path.isfile(image):
+            isExist = True
+
+    if isExist:
         with open(image, 'rb') as fp:
             img = MIMEImage(fp.read())
-            img.add_header('Content-Disposition', 'attachment', filename="example.jpg")
+            img.add_header('Content-Disposition', 'attachment', filename = fileName)
             msg.attach(img)
 
         try:
@@ -100,6 +111,23 @@ def representsInt(number):
     except ValueError:
         return False
 
+def codeCorrector(code):
+    newCodeContainer = []
+   
+    for i in range(len(code)):
+        newCode = ""
+   
+        for j in range(len(code[i])):
+            
+            if (representsInt(code[i][j])):
+                newCode += code[i][j]
+            else:
+                break
+        
+        newCodeContainer.append(newCode)
+    
+    return newCodeContainer
+
 timing = time.time()
 while True:
     if time.time() - timing > 30:
@@ -111,6 +139,8 @@ while True:
         timing = time.time()
         reciver, code = receiveEmail()
         
+        code = codeCorrector(code)
+
         if reciver and code:
             for i in range(len(reciver)):
                 if representsInt(code[i]):
