@@ -108,39 +108,27 @@ def representsInt(number):
     try: 
         int(number)
         return True
+        
     except ValueError:
         return False
 
 def codeCorrector(code):
-    newCodeContainer = []
-
-    for i in range(len(code)):
-        newCode = ""
-   
-        for j in range(len(code[i])):
-            
-            if (representsInt(code[i][j])):
-                newCode += code[i][j]
-            else:
-                break
-        
-        newCodeContainer.append(newCode)
-    
-    return newCodeContainer
-
-def deleteLettersBeforeNum(code):
     newCodeContainer = []
     indexOfCodes = []
 
     for i in range(len(code)):
         for j in range(len(code[i])):
             if representsInt(code[i][j]):
-              indexOfCodes.append(j)
-              break
+                indexOfCodes.append(j)
+                break
 
         newCode = ""
         for j in range(indexOfCodes[i] ,len(code[i])):
-            newCode += code[i][j]
+            if (representsInt(code[i][j])):
+                newCode += code[i][j]
+            else:
+                break
+
         newCodeContainer.append(newCode)
 
     return newCodeContainer
@@ -155,7 +143,6 @@ while True:
 
         timing = time.time()
         reciver, code = receiveEmail()
-        code = deleteLettersBeforeNum(code)
         code = codeCorrector(code)
 
         if reciver and code:
