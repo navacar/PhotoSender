@@ -18,11 +18,11 @@ from email.header import decode_header
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
-from Variables import PASSWORD
+from Variables import PASSWORD, EMAILADDRESS, SMTPSERVER, IMAPSERVER
 
-emailAdress = "navacartest@mail.ru"
-server = "smtp.mail.ru"
-imapServer = "imap.mail.ru"
+emailAddress = EMAILADDRESS
+server = SMTPSERVER
+imapServer = IMAPSERVER
 smtpPort = 587
 imapPort = 993
 
@@ -70,7 +70,7 @@ def receiveEmail():
 def sendTestMail(reciver, imageCode):
     msg = MIMEMultipart()
     msg['Subject'] = '[Email Test]'
-    msg['From'] = emailAdress
+    msg['From'] = emailAddress
     msg['To'] = reciver
 
     isExist = False
@@ -96,8 +96,8 @@ def sendTestMail(reciver, imageCode):
             with smtplib.SMTP(server, smtpPort) as smtpObj:
                 smtpObj.ehlo()
                 smtpObj.starttls()
-                smtpObj.login(emailAdress, PASSWORD)
-                smtpObj.sendmail(emailAdress, reciver, msg.as_string())
+                smtpObj.login(emailAddress, PASSWORD)
+                smtpObj.sendmail(emailAddress, reciver, msg.as_string())
                 smtpObj.quit()
         except Exception as e:
             print(e)
@@ -150,7 +150,7 @@ while True:
     if time.time() - timing > 30:
 
         mail = imaplib.IMAP4_SSL(imapServer)
-        mail.login(emailAdress, PASSWORD)
+        mail.login(emailAddress, PASSWORD)
         mail.select('inbox')
 
         timing = time.time()
