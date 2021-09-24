@@ -101,6 +101,7 @@ def sendTestMail(reciver, imageCode):
                 smtpObj.quit()
         except Exception as e:
             print(e)
+        print("Message was sended")
     else:
         print("Image not exist")
 
@@ -117,17 +118,20 @@ def codeCorrector(code):
     indexOfCodes = []
 
     for i in range(len(code)):
+        indexOfCodes.append(-1)
         for j in range(len(code[i])):
             if representsInt(code[i][j]):
-                indexOfCodes.append(j)
+                indexOfCodes[i] = j
                 break
 
+    for i in range(len(code)):
         newCode = ""
-        for j in range(indexOfCodes[i] ,len(code[i])):
-            if (representsInt(code[i][j])):
-                newCode += code[i][j]
-            else:
-                break
+        if indexOfCodes[i] != -1:
+            for j in range(indexOfCodes[i] ,len(code[i])):
+                if (representsInt(code[i][j])):
+                    newCode += code[i][j]
+                else:
+                    break
 
         newCodeContainer.append(newCode)
 
@@ -149,7 +153,6 @@ while True:
             for i in range(len(reciver)):
                 if representsInt(code[i]):
                     sendTestMail(reciver[i], int(code[i]))
-                    print("Message was sended")
                 else:
                     print("Code is not numeric")
         else:
