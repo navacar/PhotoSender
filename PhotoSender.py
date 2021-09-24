@@ -113,7 +113,7 @@ def representsInt(number):
 
 def codeCorrector(code):
     newCodeContainer = []
-   
+
     for i in range(len(code)):
         newCode = ""
    
@@ -128,6 +128,23 @@ def codeCorrector(code):
     
     return newCodeContainer
 
+def deleteLettersBeforeNum(code):
+    newCodeContainer = []
+    indexOfCodes = []
+
+    for i in range(len(code)):
+        for j in range(len(code[i])):
+            if representsInt(code[i][j]):
+              indexOfCodes.append(j)
+              break
+
+        newCode = ""
+        for j in range(indexOfCodes[i] ,len(code[i])):
+            newCode += code[i][j]
+        newCodeContainer.append(newCode)
+
+    return newCodeContainer
+
 timing = time.time()
 while True:
     if time.time() - timing > 30:
@@ -138,13 +155,14 @@ while True:
 
         timing = time.time()
         reciver, code = receiveEmail()
-        
+        code = deleteLettersBeforeNum(code)
         code = codeCorrector(code)
 
         if reciver and code:
             for i in range(len(reciver)):
                 if representsInt(code[i]):
                     sendTestMail(reciver[i], int(code[i]))
+                    print("Message was sended")
                 else:
                     print("Code is not numeric")
         else:
