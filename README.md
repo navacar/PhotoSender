@@ -13,3 +13,5 @@ email,
 os
 
 To edit any address, edit file Variable.py
+
+Images must be placed in Resources and named by their codes.
